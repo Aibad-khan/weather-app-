@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="styles" href="/public/styles.css">
+    <script src="https://kit.fontawesome.com/5f1b1f1303.js" crossorigin="anonymous"></script>
+    <title>Weather App</title>
+
+    <style>
+        * {
+          padding: 0;
+          margin: 0;
+          /* font-family: "Jost", sans-serif; */
+          font-family: "Quicksand", sans-serif;
+        }
+  
+        body {
+          background: #f3f2ef;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          /* height: 100vh; */
+          width: 100vw;
+        }
+  
+        html,
+        body {
+          font-size: 62.5%;
+          height: 100%;
+        }
+  
+        html {
+          background: #eee;
+        }
+  
+        .box {
+          margin-top: 8rem;
+          width: 20vw;
+          height: 65vh;
+          border-radius: 0.5rem;
+          box-shadow: 0 0.2rem 3rem rgba(0, 0, 0, 0.2);
+          background: #a5bbdd;
+          position: relative;
+          overflow: hidden;
+          transform: translate3d(0, 0, 0);
+          min-width: 20rem;
+          min-height: 35rem;
+        }
+  
+        .wave {
+          opacity: 0.3;
+          position: absolute;
+          top: 120%;
+          left: 50%;
+          background: white;
+          width: 50rem;
+          height: 50rem;
+          margin-left: -25rem;
+          margin-top: -25rem;
+          transform-origin: 50% 48%;
+          border-radius: 43%;
+          animation: drift 3000ms infinite linear;
+          z-index: 1;
+        }
+  
+        .wave.-three {
+          animation: drift 5000ms infinite linear;
+          z-index: 2 !important;
+          opacity: 0.2;
+        }
+  
+        .wave.-two {
+          animation: drift 7000ms infinite linear;
+          opacity: 0.1;
+          z-index: 3 !important;
+        }
+  
+        .box:after {
+          content: "";
+          display: block;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 11;
+          transform: translate3d(0, 0, 0);
+        }
+  
+        @keyframes drift {
+          from {
+            transform: rotate(0deg);
+          }
+          from {
+            transform: rotate(360deg);
+          }
+        }
+        .info {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 70%;
+          z-index: 4;
+        }
+  
+        .location {
+          margin-top: 8rem;
+          text-align: center;
+          font-weight: 800;
+          font-size: 2rem;
+        }
+  
+        .fa-street-view {
+          animation: rotates 3s linear infinite alternate;
+        }
+  
+        @keyframes rotates {
+          from {
+            transform: translateX(-0.5rem);
+          }
+          to {
+            transform: translateX(0.5rem);
+          }
+        }
+  
+        #date {
+          text-align: center;
+          margin-top: 0.5rem;
+          color: #57606f;
+          font-size: 1.5rem;
+          font-weight: 300;
+          text-transform: uppercase;
+        }
+  
+        .temp {
+          margin-top: 0.5rem;
+          text-align: center;
+          font-size: 3rem;
+        }
+  
+        .tempmin_max {
+          text-align: center;
+          margin-top: 0.3rem;
+          font-weight: 300;
+          font-size: 1.5rem;
+          color: #57606f;
+        }
+  
+        #weathercon {
+          height: 40%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 3em;
+        }
+  
+        #weathercon .fas {
+          font-size: 6rem;
+          animation: fas-anime 3s linear infinite alternate;
+        }
+  
+        @keyframes fas-anime {
+          from {
+            transform: scale(1.1);
+          }
+          to {
+            transform: scale(1.5);
+          }
+        }
+  
+        @media (max-width: 600px) {
+          .box {
+            width: 90vw;
+            height: 80vh;
+          }
+  
+          .wave {
+            top: 85%;
+          }
+  
+          #weathercon {
+            font-size: 5em;
+          }
+  
+          .info {
+            font-size: 1.5rem;
+          }
+        }
+        @media (max-height: 500px) {
+          .box {
+            height: 80vh;
+          }
+  
+          .wave {
+            top: 115%;
+          }
+        }
+        body > div{
+          width: 100vw;
+          text-align: center;
+          color: rgb(0, 0, 0);
+        }
+        .f{
+          margin-bottom:20rem;
+          font-size:xx-large;
+          text-align: center;
+        }
+        
+
+input[type="text"] {
+  padding: 3px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-right: 10px;
+  width: 150px; /* Adjust width as needed */
+  background-color:#eee;
+}
+
+button {
+  padding: 5px 10px;
+  background-color:slategray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor:pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+#desc {
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            color: white;
+            font-weight:300;
+        }
+
+      </style>
+      <!-- <title>Weather App</title> -->
+    </head>
+
+
+
+    
+    <body>
+        <div class="box">
+          <div class="wave -one"></div>
+          <div class="wave -two"></div>
+          <div class="wave -three"></div>
+    
+          <div id="weathercon">
+            <i class="fas fa-sun" style="color: white"></i>
+          </div>
+    
+          <div class="info">
+            <h2 class="location">
+              <i class="fas fa-street-view" style="color: #fff">
+            <h3 id="loc">location</h3>
+            <h3 id="count">country</h3>
+            </i>
+
+            </h2>
+
+            <p id="date">WED | nov 23 | 10:49AM</p>
+            <h1 class="temp">30&deg;C</h1>
+            <p id="desc"></p>
+            <h3 class="tempmin_max">
+              Min tempmin&deg;C | Max tempmax&deg;C
+            </h3>
+          </div>
+        </div>
+
+        <div class="f">
+        <form method="post" action="/submit">
+          <input type="text" name="name" id="location" placeholder="Enter the city" required>
+          <button>submit</button>
+        </form>
+      </div>
+    <!-- <div class="box">
+        <div class="wave-one"></div>
+        <div class="wave-two"></div>
+        <div class="wave-three"></div>
+        
+            
+        <div id="weathercon">
+            <i class="fa-solid fa-sun fa-beat" style="color: #FFD43B"></i>
+        </div>
+
+        <div class="info">
+            <i class="fa-solid fa-street-view" style="color: #051633;">varanasi</i>
+            <p id="date">3/6/2024</p>
+            <h3 class="temperature">26 degree</h1>
+                <h5 class="min-max">min 23 max 40</h5>
+        </div>
+        <h2>
+
+        </h2>
+    </div> -->
+<!-- <script>
+    let day=document.getElementById('date');
+
+    getDate=()=>{
+    const today = new Date();
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = [
+    "Jan", "Feb", "March", "April", "May", "June",
+    "July", "Aug", "Sept", "Oct", "Nov", "Dec"
+];
+    const dayName = daysOfWeek[today.getDay()];
+    console.log(dayName);
+
+    let date=today.getDate()
+    console.log(date);
+
+    let month=months[today.getMonth()];
+    console.log(month);
+
+    let hours = today.getHours();
+    const minutes = today.getMinutes();
+const ampm = hours >= 12 ? 'PM' : 'AM';
+
+// Convert 24-hour format to 12-hour format
+hours = hours % 12;
+hours = hours ? hours : 12; // The hour '0' should be '12'
+
+// Format minutes to always be two digits
+const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+const timeString = `${hours}:${formattedMinutes}${ampm}`;
+
+console.log(timeString);
+let time=`${dayName}|${month} ${date}| ${timeString}`;
+//console.log(time);
+return time;
+    
+    }
+
+    let time=getDate();
+    document.getElementById('date').innerHTML=time;
+
+    // getDate=()=>{
+    //     var wkday=new Array(7);
+    //     wkday[0]='Monday'
+    //     wkday[1]='Tuesday'
+    //     wkday[2]='Wednesday'
+    //     wkday[3]='Thursday'
+    //     wkday[4]='Friday'
+    //     wkday[5]='Saturday'
+    //     wkday[6]='Sunday'
+        
+    //     let time=new Date();
+    //     console.log(time);
+    // }
+    // getDate();
+
+
+</script> -->
+<!-- <script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const url = 'https://api.openweathermap.org/data/2.5/weather?q=varanasi&appid=e2dbf5eaa2478c89285d4f78afdc2b49&units=metric';
+
+      async function fetchData() {
+          try {
+              const response = await fetch(url);
+              const data = await response.json();
+              const tempval = data.main.temp;
+              document.getElementById('tempval').textContent = tempval;
+          } catch (error) {
+              console.error('There was an error making the GET request:', error);
+              document.getElementById('tempval').textContent = 'Error';
+          }
+      }
+
+      fetchData(); 
+  });
+</script>-->
+    
+</body>
+</html>
